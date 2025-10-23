@@ -29,7 +29,7 @@ class Order {
   }
 
   static async findById(id) {
-    // Get order with items
+    
     const orderQuery = `
       SELECT o.*,
         CASE
@@ -52,7 +52,7 @@ class Order {
 
     if (!order) return null;
 
-    // Get product details from MongoDB for each item
+    
     const Product = require("./Product");
     const itemsWithProducts = [];
 

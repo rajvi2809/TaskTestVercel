@@ -12,7 +12,6 @@ const { authenticateToken, authorizeAdmin } = require("../middleware/auth");
 
 const router = express.Router();
 
-// Customer routes
 router.post(
   "/",
   authenticateToken,
@@ -29,7 +28,7 @@ router.post(
 router.get("/my-orders", authenticateToken, getUserOrders);
 router.get("/:id", authenticateToken, getOrderById);
 
-// Admin routes
+
 router.get("/", authenticateToken, authorizeAdmin, getAllOrders);
 router.get(
   "/reports/daily-revenue",

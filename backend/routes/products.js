@@ -13,13 +13,13 @@ const { authenticateToken, authorizeAdmin } = require("../middleware/auth");
 
 const router = express.Router();
 
-// Public routes
+
 router.get("/", getProducts);
 router.get("/categories", getCategories);
 router.get("/sales-summary", getCategorySalesSummary);
 router.get("/:id", getProductById);
 
-// Admin routes
+
 router.post(
   "/",
   authenticateToken,

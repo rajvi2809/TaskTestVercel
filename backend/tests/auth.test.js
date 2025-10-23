@@ -14,7 +14,10 @@ describe("Auth Tests", () => {
         })
         .expect(201);
 
-      expect(response.body).toHaveProperty("message", "User registered successfully");
+      expect(response.body).toHaveProperty(
+        "message",
+        "User registered successfully"
+      );
       expect(response.body).toHaveProperty("user");
       expect(response.body.user).toHaveProperty("id");
       expect(response.body.user).toHaveProperty("name", "Test User");

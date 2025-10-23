@@ -3,7 +3,7 @@ const OrderItem = require("../models/OrderItem");
 const Product = require("../models/Product");
 const { validationResult } = require("express-validator");
 
-// Create order from cart
+
 const createOrder = async (req, res) => {
   const errors = validationResult(req);
   if (!errors.isEmpty()) {
@@ -22,7 +22,7 @@ const createOrder = async (req, res) => {
     const productsToUpdate = [];
     const productCache = new Map();
 
-    // Validate products and calculate total
+    
     for (const item of items) {
       const product = await Product.findById(item.productId);
       if (!product) {
@@ -44,10 +44,10 @@ const createOrder = async (req, res) => {
       productCache.set(product._id.toString(), product);
     }
 
-    // Create order
+    
     const order = await Order.create(userId, total);
 
-    // Create order items
+    
     for (const item of items) {
       const productIdKey = item.productId?.toString();
       const cachedProduct =
@@ -61,7 +61,7 @@ const createOrder = async (req, res) => {
       );
     }
 
-    // Decrement product stock
+    
     if (productsToUpdate.length > 0) {
       const bulkOps = productsToUpdate.map(({ productId, quantity }) => ({
         updateOne: {
@@ -83,7 +83,7 @@ const createOrder = async (req, res) => {
   }
 };
 
-// Get user's orders
+
 const getUserOrders = async (req, res) => {
   try {
     const userId = req.user.id;
@@ -95,7 +95,7 @@ const getUserOrders = async (req, res) => {
   }
 };
 
-// Get order by ID
+
 const getOrderById = async (req, res) => {
   try {
     const order = await Order.findById(req.params.id);
@@ -103,7 +103,7 @@ const getOrderById = async (req, res) => {
       return res.status(404).json({ message: "Order not found" });
     }
 
-    // Check authorization
+    
     if (req.user.role !== "admin" && order.userId !== req.user.id) {
       return res.status(403).json({ message: "Unauthorized" });
     }
@@ -114,7 +114,7 @@ const getOrderById = async (req, res) => {
   }
 };
 
-// Get all orders (Admin only)
+
 const getAllOrders = async (req, res) => {
   try {
     const orders = await Order.getAll();
@@ -124,7 +124,7 @@ const getAllOrders = async (req, res) => {
   }
 };
 
-// Get daily revenue (Admin report)
+
 const getDailyRevenue = async (req, res) => {
   try {
     const revenue = await Order.getDailyRevenue();
@@ -134,7 +134,7 @@ const getDailyRevenue = async (req, res) => {
   }
 };
 
-// Get top customers (Admin report)
+
 const getTopCustomers = async (req, res) => {
   try {
     const customers = await Order.getTopCustomers();

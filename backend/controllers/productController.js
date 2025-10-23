@@ -48,7 +48,7 @@ const getProducts = async (req, res) => {
   }
 };
 
-// Get single product
+
 const getProductById = async (req, res) => {
   try {
     const product = await Product.findById(req.params.id);
@@ -61,7 +61,7 @@ const getProductById = async (req, res) => {
   }
 };
 
-// Create product (Admin only)
+
 const createProduct = async (req, res) => {
   const errors = validationResult(req);
   if (!errors.isEmpty()) {
@@ -96,7 +96,7 @@ const createProduct = async (req, res) => {
   }
 };
 
-// Update product (Admin only)
+
 const updateProduct = async (req, res) => {
   const errors = validationResult(req);
   if (!errors.isEmpty()) {
@@ -122,7 +122,7 @@ const updateProduct = async (req, res) => {
   }
 };
 
-// Delete product (Admin only)
+
 const deleteProduct = async (req, res) => {
   try {
     const product = await Product.findByIdAndDelete(req.params.id);
@@ -135,7 +135,7 @@ const deleteProduct = async (req, res) => {
   }
 };
 
-// Get categories
+
 const getCategories = async (req, res) => {
   try {
     const categories = await Product.distinct("category");
@@ -145,7 +145,7 @@ const getCategories = async (req, res) => {
   }
 };
 
-// MongoDB aggregation - category-wise sales
+
 const getCategorySalesSummary = async (req, res) => {
   try {
     const summary = await Product.aggregate([

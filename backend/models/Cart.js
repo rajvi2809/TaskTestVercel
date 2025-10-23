@@ -2,11 +2,11 @@ const pool = require("../config/database");
 
 class Cart {
   static async findOrCreateByUserId(userId) {
-    // First try to find existing cart
+    
     let cart = await this.findByUserId(userId);
 
     if (!cart) {
-      // Create new cart if doesn't exist
+      
       const query = `
         INSERT INTO carts (user_id, created_at, updated_at)
         VALUES ($1, NOW(), NOW())
@@ -31,7 +31,7 @@ class Cart {
 
       if (!cart) return null;
 
-      // Get cart items from PostgreSQL
+      
       const Product = require("./Product");
       const cartItemsResult = await pool.query(
         "SELECT * FROM cart_items WHERE cart_id = $1 ORDER BY added_at DESC",
@@ -43,7 +43,7 @@ class Cart {
         items: [],
       };
 
-      // Get product details from MongoDB for each cart item
+      
       for (const item of cartItemsResult.rows) {
         try {
           const product = await Product.findById(item.product_id);
@@ -65,13 +65,13 @@ class Cart {
             });
           } else {
             console.warn(`Product ${item.product_id} not found in MongoDB`);
-            // Add item without product details
+            
             cartWithItems.items.push({
               id: item.id,
               productId: item.product_id,
               quantity: item.quantity,
               addedAt: item.added_at,
-              product: null, // Product not found
+              product: null, 
             });
           }
         } catch (error) {
@@ -79,13 +79,13 @@ class Cart {
             `Error fetching product ${item.product_id}:`,
             error.message
           );
-          // Add item without product details
+          
           cartWithItems.items.push({
             id: item.id,
             productId: item.product_id,
             quantity: item.quantity,
             addedAt: item.added_at,
-            product: null, // Error fetching product
+            product: null,
           });
         }
       }

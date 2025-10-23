@@ -2,15 +2,15 @@ const pool = require("../config/database");
 
 class CartItem {
   static async addToCart(cartId, productId, quantity = 1) {
-    // Check if item already exists in cart
+    
     const existingItem = await this.findByCartAndProduct(cartId, productId);
 
     if (existingItem) {
-      // Update quantity
+      
       const newQuantity = existingItem.quantity + quantity;
       return this.updateQuantity(existingItem.id, newQuantity);
     } else {
-      // Add new item
+      
       const query = `
         INSERT INTO cart_items (cart_id, product_id, quantity, added_at)
         VALUES ($1, $2, $3, NOW())

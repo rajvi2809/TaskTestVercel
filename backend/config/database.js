@@ -1,16 +1,14 @@
 const { Pool } = require("pg");
 
 let pool;
-
 if (!global.pool) {
   global.pool = new Pool({
-    connectionString: process.env.POSTGRES_URL,
+    connectionString: process.env.POSTGRES_URL + "?sslmode=require",
     ssl: { rejectUnauthorized: false },
   });
-
-  global.pool.on("error", (err) => {
-    console.error("Unexpected error on idle client", err);
-  });
+  global.pool.on("error", (err) =>
+    console.error("Unexpected error on idle client", err)
+  );
 }
 
 pool = global.pool;

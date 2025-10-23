@@ -1,15 +1,17 @@
 const { Pool } = require("pg");
-require("dotenv").config();
 
-const pool = new Pool({
-  connectionString: process.env.POSTGRES_URL,
-  ssl: {
-    rejectUnauthorized: false,
-  },
-});
+let pool;
 
-pool.on("error", (err) => {
-  console.error("Unexpected error on idle client", err);
-});
+if (!global.pool) {
+  global.pool = new Pool({
+    connectionString: process.env.POSTGRES_URL,
+    ssl: { rejectUnauthorized: false },
+  });
 
+  global.pool.on("error", (err) => {
+    console.error("Unexpected error on idle client", err);
+  });
+}
+
+pool = global.pool;
 module.exports = pool;

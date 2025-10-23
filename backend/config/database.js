@@ -1,7 +1,11 @@
 const { Pool } = require("pg");
+require("dotenv").config();
 
 let pool;
 if (!global.pool) {
+  if (!process.env.POSTGRES_URL) {
+    console.error("POSTGRES_URL environment variable is not defined");
+  }
   global.pool = new Pool({
     connectionString: process.env.POSTGRES_URL + "?sslmode=require",
     ssl: { rejectUnauthorized: false },

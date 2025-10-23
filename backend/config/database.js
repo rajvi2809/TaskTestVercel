@@ -7,12 +7,15 @@ if (!global.pool) {
     console.error("POSTGRES_URL environment variable is not defined");
   }
   global.pool = new Pool({
-    connectionString: process.env.POSTGRES_URL + "?sslmode=require",
+    connectionString: process.env.POSTGRES_URL,
     ssl: { rejectUnauthorized: false },
   });
-  global.pool.on("error", (err) =>
-    console.error("Unexpected error on idle client", err)
-  );
+  global.pool.on("error", (err) => {
+    if (!process.env.POSTGRES_URL) {
+      console.error("POSTGRES_URL environment variable is not defined");
+    }
+    console.error("Unexpected error on idle client", err);
+  });
 }
 
 pool = global.pool;

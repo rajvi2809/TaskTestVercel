@@ -52,7 +52,11 @@ for Admin login:-
 email=admin@example.com
 password=Admin@123
 
+
 Deployment Note:
+
 The project is fully functional on localhost and deployed platforms for MongoDB Atlas, including the admin panel, where you can perform CRUD operations, view all orders, and generate reports. All product-related features are working correctly.
 
 However, the Supabase Postgres integration is not working on deployed environments, which causes the login functionality to throw a 500 Internal Server Error. I also tried deploying on other platforms, but the issue with Supabase Postgres persists there as well. Everything else in the application works as expected.
+I would kindly request you to please run the project locally using the following GitHub repository:
+https://github.com/rajvi2809/TaskTest
